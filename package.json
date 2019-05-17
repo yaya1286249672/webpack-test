@@ -1,0 +1,32 @@
+{
+  "name": "wepback-update",
+  "version": "1.0.0",
+  "description": "self study road",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaya1286249672/webpack-test.git"
+  },
+  "keywords": [
+    "webpack4",
+    "vue"
+  ],
+  "author": "yaya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yaya1286249672/webpack-test/issues"
+  },
+  "homepage": "https://github.com/yaya1286249672/webpack-test#readme",
+  "devDependencies": {
+    "css-loader": "^2.1.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "lodash": "^4.17.11",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
+  }
+}
