@@ -2,7 +2,10 @@ const path = require('path');
 //解决新建js文件并打包后dist/index.html 引入名称未更新
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// 删除打包文件
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const webpack = require('webpack');
 
 
 //把css文件抽离一个单独的style.css文件而不是直接插入到head中
@@ -16,13 +19,16 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 //path.resolve把一个路径或路径片段的序列解析为一个绝对路径
 module.exports = {
+  mode: "production",
   entry: {
-    app: './src/index.js',
-    print: './src/print.js'
+    // app: './src/index.js',
+    // print: './src/print.js'
+    app: './src/index.js'
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    hot: true,
   },
   output: {
     // filename: 'bundle.js',
@@ -71,6 +77,8 @@ module.exports = {
         name: 'My Manifest'
       }
     }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
 
   ]
 };
