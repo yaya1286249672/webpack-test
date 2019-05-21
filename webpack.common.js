@@ -1,11 +1,6 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-
-
-
 const dev = process.env.NODE_ENV !== 'production';
 
 
@@ -14,14 +9,12 @@ module.exports = {
         app: './src/index.js'
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'Output Management',
             filename: 'index.html',
             inject: false,
             template: require('html-webpack-template'),
         }),
-
         new MiniCssExtractPlugin({
             filename: dev ? '[name].css' : '[name].[hash].css',
             chunkFilename: dev ? '[id].css' : '[id].[hash].css',
@@ -32,25 +25,50 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
+
+
     module: {
         rules: [{
             test: /\.(sa|sc|c)ss$/,
             use: [{
-                    loader: dev ? 'style-loader' : MiniCssExtractPlugin.loader,
-                    options: {
-                        // publicPath: './',
-                        hmr: process.env.NODE_ENV === 'development',
-                    },
+                loader: dev ? 'style-loader' : MiniCssExtractPlugin.loader,
+                options: {
+                    hmr: process.env.NODE_ENV === 'development',
                 },
-                'css-loader',
-                'postcss-loader',
-                // 'sass-loader',
+            },
+            {
+                loader: 'css-loader',
+                options: {
+                    importLoaders: 1,
+                }
+            },
+            {
+                loader: 'postcss-loader',
+                options: {
+                    plugins: [
+                        require('precss')(), //sass解析
+                        require('cssnano')(), //相同css合并（例：.a{width:100px},.b{width:100px} => .a,.b{width:100px}）
+                        require('autoprefixer')({
+                            browsers: [
+                                '>0%',
+                                'last 4 versions',
+                                'Firefox ESR',
+                                'not ie < 8'//针对不同浏览器某些css属性需要用到不同内核前缀（例：-webkit-transfrom，-moz-transfrom)
+                            ]
+                        })
+                    ],
+                    sourceMap: true,
+                    config: {
+                        path: 'postcss.config.js'
+                    }
+                },
+
+            },
             ],
-        }, ]
+        },]
     },
     optimization: {
         splitChunks: {
-            // include all types of chunks
             chunks: 'all'
         }
     }
