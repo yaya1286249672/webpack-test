@@ -3,3 +3,4 @@ cache
 npm-debug.log*
 .idea
 dist
+commitlint
