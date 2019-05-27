@@ -9,8 +9,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js",
-        "dev": "node ./dev-server.js",
-        "commitmsg": "commitlint -e $GIT_PARAMS"
+        "dev": "node ./dev-server.js"
     },
     "repository": {
         "type": "git",
