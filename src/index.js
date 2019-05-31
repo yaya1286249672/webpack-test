@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import { Router, Route, Switch, BrowserRouter,Link } from "react-router-dom";
 const history = require("history").createBrowserHistory();
+
+//rem适配
+import './plugin/flexible/index.js'
 // import createBrowserHistory from require("history");
 
 import Indexcomponent from "./component/index/index.jsx";

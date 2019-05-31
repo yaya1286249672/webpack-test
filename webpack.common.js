@@ -24,7 +24,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.(sa|c)ss$/,
         use: [
           {
             loader: dev ? "style-loader" : MiniCssExtractPlugin.loader,
@@ -62,6 +62,17 @@ module.exports = {
         ]
       },
       {
+        test: /\.scss$/,
+        use: [
+          // fallback to style-loader in development
+          process.env.NODE_ENV !== "production"
+            ? "style-loader"
+            : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
+      },
+      {
         test: /\.(m?js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
@@ -79,7 +90,7 @@ module.exports = {
             loader: "url-loader",
             options: {
               limit: 81920,
-              name: 'img/[name].[hash:7].[ext]'
+              name: "img/[name].[hash:7].[ext]"
             }
           }
         ]
