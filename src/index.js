@@ -1,67 +1,80 @@
-// import { cube } from './math.js';
-// import './style.css';
-// import printMe from './print.js';
-// import '../src/component/index/home.css'
+require("@babel/polyfill");
+import React, { Component } from "react";
+import { render } from "react-dom";
+import { Router, Route, Switch, BrowserRouter,Link } from "react-router-dom";
+const history = require("history").createBrowserHistory();
 
+//rem适配
+import './plugin/flexible/index.js'
+// import createBrowserHistory from require("history");
 
-// if (process.env.NODE_ENV !== 'production') {
-//     console.log('Looks like we are in development mode!');
-// }
+import Indexcomponent from "./component/index/index.jsx";
+import Sortcomponent from "./component/sort/index.jsx";
 
-// function component() {
-//     var element = document.createElement('pre');
-//     element.classList.add("hello")
+const rootRoute = {
+  childRoutes: [
+    {
+      path: "/",
+      //   indexRoute: {
+      //     getComponent(nextState, cb) {
+      //       require.ensure(
+      //         [],
+      //         require => {
+      //           cb(null, require("./router/sort")).default;
+      //         },
+      //         "HomePage"
+      //       );
+      //     }
+      //   },
+      component: Application,
+      indexRoute: {
+        /*首页*/
+        onEnter: (nextState, replaceState) => replaceState("/homeIndex")
+      },
+      childRoutes: [
+        {
+          path: "homeIndex",
+          getComponent: require("./router/home.jsx").default,
+          onEnter: () => {
+            document.title = "首页";
+          }
+        }
+      ]
+    },
+    /*未匹配的重定向*/
+    { path: "*", onEnter: (nextState, replaceState) => replaceState("/") }
+  ]
+};
 
-//     element.innerHTML = [
-//         'Hello webpack!',
-//         '5 cubed is equal to ' + cube(5)
-//     ].join('\n\n');
-//     return element;
+console.log(Indexcomponent);
+console.log(Sortcomponent);
 
-// }
+class Application extends Component {
+  render() {
+    console.log("this.props.children", this.props.children);
+    return (
+      <section id="wap-main">
+        <Indexcomponent />
+      </section>
+    );
+  }
+}
+render(
+    <Router history={history}>
+     <ul>
+        <li><Link to="/home">首页</Link></li>
+        <li><Link to="/sort">关于</Link></li>
+      </ul>
 
-// document.body.appendChild(component());
-require('@babel/polyfill')
-import React, { Component } from 'react'
-import { render } from 'react-dom';
-import { Router, browserHistory } from 'react-router';
-import Indexcomponent from './component/index/index.jsx'
-
-// const rootRoute = {
-//     childRoutes: [{
-//             path: "/",
-//             component: Wrapermain,
-//             indexRoute: {
-//                 /*首页*/
-//                 onEnter: (nextState, replaceState) => replaceState("/home")
-//             },
-//             childRoutes: [
-//                 { path: "userInfo", getComponent: require('./component/index/index').default, onEnter: () => { document.title = "个人信息" } }
-//             ]
-
-//         },
-
-//         /*未匹配的重定向*/
-//         { path: "*", onEnter: (nextState, replaceState) => replaceState("/") }
-//     ]
-// };
-// class Wrapermain extends Component {
-//     render() {
-//         return <div > 哈哈啊哈 < /div>
-
-//     }
-// }
-
-// const Routes = () => ( < Router >
-//     <
-//     div >
-//     <
-//     Route path = "/app"
-//     component = { Indexcomponent }
-//     /> < /
-//     div > <
-//     /Router>
-// );
-
-console.log(Indexcomponent)
-render(( < Indexcomponent / > ), document.getElementById('app'));
+      <hr/>
+      <Switch>
+      <Route  path="/home" component={Application}/>
+    <Route path="/sort" component={Sortcomponent} />
+        </Switch>
+    {/* <Switch>
+      <Route path="/" exact component={Application} />
+      <Route path="/sort" component={Sortcomponent} />
+    </Switch> */}
+  </Router>,
+  document.getElementById("app")
+);
