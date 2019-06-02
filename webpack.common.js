@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const dev = process.env.NODE_ENV !== "production";
+console.log('process.env.NODE_ENV=======>', process.env.NODE_ENV)
 console.log("dev=============================》", dev);
 //'./src/index.html' require('html-webpack-template')
 module.exports = {
