@@ -5,8 +5,8 @@ import { Router, Route, Switch, BrowserRouter,Link } from "react-router-dom";
 const history = require("history").createBrowserHistory();
 
 //rem适配
-import './plugin/flexible/index.js'
-// import createBrowserHistory from require("history");
+// import './plugin/flexible/index.js'
+import 'plugin/flexible/index.js'
 
 import Indexcomponent from "./component/index/index.jsx";
 import Sortcomponent from "./component/sort/index.jsx";
