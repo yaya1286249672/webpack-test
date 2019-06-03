@@ -4,6 +4,7 @@ import './two.css';
 
 
 export default class Indexcomponent extends Component{
+   
     render(){
         return(<div>
             哈哈,出来啦

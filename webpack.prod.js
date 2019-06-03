@@ -15,15 +15,17 @@ module.exports = merge(common, {
         new CleanWebpackPlugin(),
         new webpack.HashedModuleIdsPlugin(),
         new MiniCssExtractPlugin({
-            filename:  "css/[name].[hash].css",
+            filename: "css/[name].[hash].css",
             chunkFilename: "css/[id].[hash].css"
-          })
+        })
     ],
     optimization: {
         minimizer: [
             new OptimizeCSSAssetsPlugin({}),
             new UglifyJsPlugin({
                 parallel: true,
+                cache: true,
+                sourceMap: true
             })
         ],
         splitChunks: {
@@ -36,19 +38,19 @@ module.exports = merge(common, {
             automaticNameDelimiter: "~",
             name: true,
             cacheGroups: {
-              vendors: {
-                test: /[\\/]node_modules[\\/]/,
-                priority: -10
-              },
-              default: {
-                minChunks: 2,
-                priority: -20,
-                reuseExistingChunk: true
-              }
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true
+                }
             }
-          },
-          runtimeChunk: {
+        },
+        runtimeChunk: {
             name: entrypoint => `runtime~${entrypoint.name}`
-          }
+        }
     }
 });
