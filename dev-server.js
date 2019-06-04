@@ -9,7 +9,7 @@ const options = {
 };
 
 webpackDevServer.addDevServerEntrypoints(config, options);
-const compiler = webpack(config);
+const compiler = webpack(config);6
 const server = new webpackDevServer(compiler, options);
 
 server.listen(5000, 'localhost', () => {

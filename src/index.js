@@ -49,6 +49,12 @@ const rootRoute = {
 console.log(Indexcomponent);
 console.log(Sortcomponent);
 
+function* gen() {
+  yield 1;
+}
+var g = gen();
+console.log('gen.next()========>',g.next())
+
 class Application extends Component {
   render() {
     console.log("this.props.children", this.props.children);
