@@ -1,9 +1,16 @@
 @import '../../sass/minxi.scss';
-
-
-.sort-container{
-font-size:rem(160);
+.sort-container {
+    display: flex;
+    justify-content: flex-start;
+    font-size: rem(16);
+    height: rem(100);
+    width: 100%;
 }
-.sort-subject{
-    font-size:16px;
+
+.sort-item {
+    flex: 1
+}
+
+.sort-subject {
+    font-size: 16px;
 }

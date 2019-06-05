@@ -6,8 +6,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); //压缩css插件
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -17,16 +16,24 @@ module.exports = merge(common, {
         new MiniCssExtractPlugin({
             filename: "css/[name].[hash].css",
             chunkFilename: "css/[id].[hash].css"
-        })
+        }),
+        new ParallelUglifyPlugin({
+            cacheDir: '.cache/',
+            uglifyJS: {
+                output: {
+                    comments: false
+                },
+                compress: {
+                    // warnings: false,
+                    drop_debugger: true, // 去除生产环境的 debugger 和 console.log
+                    drop_console: true
+                }
+            }
+        }),
     ],
     optimization: {
         minimizer: [
-            new OptimizeCSSAssetsPlugin({}),
-            new UglifyJsPlugin({
-                parallel: true,
-                cache: true,
-                sourceMap: true
-            })
+            new OptimizeCSSAssetsPlugin({})
         ],
         splitChunks: {
             chunks: "all", //意味着即使在异步和非异步块之间也可以共享块
