@@ -2,6 +2,11 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const dev = process.env.NODE_ENV !== "production";
+const webpack = require('webpack')
+
+//引入
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+
 console.log("process.env.NODE_ENV=======>", process.env.NODE_ENV);
 console.log("dev=============================》", dev);
 //'./src/index.html' require('html-webpack-template')
@@ -19,12 +24,12 @@ module.exports = {
   },
   resolve: {
     modules: [path.resolve(__dirname, "node_modules")],
-    extensions: ['.js','.css','jsx','.json','.wasm', '.mjs'],
+    extensions: [".js", ".css", "jsx", ".json", ".wasm", ".mjs"],
     mainFiles: ["index"],
-    mainFields: ["main"],//由于大多数第三方模块都使用main字段描述入口文件的位置，所以可以设置单独一个main值，减少搜索
+    mainFields: ["main"], //由于大多数第三方模块都使用main字段描述入口文件的位置，所以可以设置单独一个main值，减少搜索
     alias: {
       src: resolve("src"),
-    plugin: resolve("src/plugin"),
+      plugin: resolve("src/plugin")
     }
   },
   plugins: [
@@ -41,13 +46,28 @@ module.exports = {
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true
       }
-    })
+    }),
+    // 告诉 Webpack 使用动态链接库
+    new webpack.DllReferencePlugin({
+        // 描述 lodash 动态链接库的文件内容
+        manifest: require('./public/dll/vendor.manifest.json')
+    }),
+    new AddAssetHtmlPlugin([
+        {
+            // 要添加到编译中的文件的绝对路径由于含有hash值所以引入所有js
+            filepath: path.resolve(__dirname,'./public/dll/*.js'),
+            outputPath: 'dll',
+            publicPath: 'dll',
+            includeSourcemap: false
+        }
+    ])
   ],
   output: {
     filename: "[name].[hash:8].bundle.js",
     path: path.resolve(__dirname, "dist")
   },
   module: {
+    noParse: [/jquery/, /react\.min\.js$/],
     rules: [
       {
         test: /\.(sa|c)ss$/,
