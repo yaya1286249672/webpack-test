@@ -10,6 +10,9 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 //显示打包进度
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+//分析打包文件
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 const chalk = require('chalk');
 
@@ -18,6 +21,7 @@ const chalk = require('chalk');
 module.exports = merge(common, {
     mode: 'production',
     plugins: [
+        new BundleAnalyzerPlugin(),
         new CleanWebpackPlugin(),
         new webpack.HashedModuleIdsPlugin(),
         new MiniCssExtractPlugin({

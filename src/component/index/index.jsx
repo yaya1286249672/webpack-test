@@ -23,7 +23,7 @@ export default class Indexcomponent extends Component{
         return(<div>
             哈哈,出来啦
             <button className="btn" onClick={()=>{
-                console.log('点击按钮123')
+                console.log('点击按钮1231121213232')
             }}>点我点我</button>
             <div>
                 <img src={require('../../img/green.jpg')} alt="" />

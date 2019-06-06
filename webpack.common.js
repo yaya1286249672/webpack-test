@@ -10,7 +10,8 @@ const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 console.log("process.env.NODE_ENV=======>", process.env.NODE_ENV);
 console.log("dev=============================》", dev);
 //'./src/index.html' require('html-webpack-template')
-
+//MiniCssExtractPlugin.loader
+//"style-loader"
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
@@ -83,14 +84,15 @@ module.exports = {
             options: {
               importLoaders: 1
             }
-            },
+          },
           {
             loader: "postcss-loader",
             options: {
               plugins: [
                 require("precss")(), //sass解析
                 require("cssnano")(), //相同css合并（例：.a{width:100px},.b{width:100px} => .a,.b{width:100px}）
-                require("autoprefixer")()
+                // require("autoprefixer")()
+                require("postcss-preset-env")
               ],
               sourceMap: true,
               config: {
@@ -101,23 +103,39 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
+        test: /\.scss$/, // 将 JS 字符串生成为 style 节点
         use: [
           {
-            loader:
-              process.env.NODE_ENV !== "production"
-                ? "style-loader"
-                : MiniCssExtractPlugin.loader
+                loader: dev ? "style-loader" : MiniCssExtractPlugin.loader,
+                options:{
+                    publicPath: './dist',
+                    hmr: process.env.NODE_ENV === "development"
+              }
           },
           {
-            loader: "css-loader"
+            loader: "css-loader",
+            options: {
+              importLoaders: 2 // 将 CSS 转化成 CommonJS 模块
+            }
           },
           {
-            loader: "sass-loader"
+            loader: "postcss-loader",
+            // options: {
+            //   plugins: [
+            //     //   require("precss")(), //sass解析
+            //     //   require("cssnano")(), //相同css合并（例：.a{width:100px},.b{width:100px} => .a,.b{width:100px}）
+            //     //    require("autoprefixer")(),
+            //     require("postcss-preset-env")
+            //   ],
+            //   sourceMap: true,
+            //   config: {
+            //     path: "postcss.config.js"
+            //   }
+            // }
           },
           {
-            loader: "postcss-loader"
-          },
+            loader: "sass-loader" // 将 Sass 编译成 CSS
+          }
         ]
       },
       {
