@@ -4,9 +4,16 @@ const common = require('./webpack.common.js');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 //打包时候把css从js文件中提取出来
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); //压缩css插件
-
+//压缩css插件
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); 
+//异步打包压缩js
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+//显示打包进度
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+
+const chalk = require('chalk');
+
+
 
 module.exports = merge(common, {
     mode: 'production',
@@ -30,6 +37,9 @@ module.exports = merge(common, {
                 }
             }
         }),
+        new ProgressBarPlugin({
+            format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)'
+          })
     ],
     optimization: {
         minimizer: [
