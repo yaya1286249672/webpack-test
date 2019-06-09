@@ -6,7 +6,7 @@ const resolve = dir => path.join(__dirname, dir);
 module.exports = {
     mode: 'production',
     entry: {
-        //  将 react、lodash等模块作为入口编译成动态链接库
+        //  将 react、react-dom等模块作为入口编译成动态链接库
         vendor: ["react", "react-dom", "react-router-dom"]
     },
     output: {

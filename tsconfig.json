@@ -1,0 +1,12 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+   "target": "es5",
+   "noImplicitAny": false,
+   "module": "amd",
+   "removeComments": false,
+   "sourceMap": false,
+   "outDir": "tscompiler"//你要生成js的目录
+  },
+  "exclude": ["node_modules", "dist"]
+}

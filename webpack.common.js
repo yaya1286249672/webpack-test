@@ -18,7 +18,6 @@ function resolve(dir) {
 module.exports = {
     entry: {
         app: "./src/index.js",
-        vendorreact: ['react']
     },
     resolveLoader: {
         modules: ['node_modules', './loaders']
@@ -29,7 +28,7 @@ module.exports = {
     },
     resolve: {
         modules: [path.resolve(__dirname, "node_modules")],
-        extensions: [".js", ".css", "jsx", ".json", ".wasm", ".mjs"],
+        extensions: [".js", ".css", "jsx", ".ts", ".json", ".wasm", ".mjs"], //扩展名文件配置
         mainFiles: ["index"],
         mainFields: ["main"], //由于大多数第三方模块都使用main字段描述入口文件的位置，所以可以设置单独一个main值，减少搜索
         alias: {
@@ -65,10 +64,10 @@ module.exports = {
             includeSourcemap: false
         }])
     ],
-    output: {
-        filename: "[name].[hash:8].bundle.js",
-        path: path.resolve(__dirname, "dist")
-    },
+    // output: {
+    //     filename: "[name].[chunkhash:8].bundle.js",
+    //     path: path.resolve(__dirname, "dist")
+    // },
     module: {
         noParse: [/jquery/, /react\.min\.js$/],
         rules: [{
@@ -163,7 +162,13 @@ module.exports = {
                         publicPath: "./"
                     }
                 }]
-            }
+            },
+            {
+                test: /\.(ts|tsx)$/,
+                use: ['babel-loader', 'awesome-typescript-loader'],
+                exclude: /node_modules/
+            },
+
         ]
     },
     optimization: {}

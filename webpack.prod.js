@@ -1,3 +1,4 @@
+const path = require("path");
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -20,12 +21,17 @@ const chalk = require('chalk');
 
 module.exports = merge(common, {
     mode: 'production',
+    output: {
+        filename: "js/[name].[chunkhash:8].bundle.js",
+        chunkFilename: 'js/[name].[chunkhash].js',
+        path: path.resolve(__dirname, "dist")
+    },
     plugins: [
         new BundleAnalyzerPlugin(),
         new CleanWebpackPlugin(),
         new webpack.HashedModuleIdsPlugin(),
         new MiniCssExtractPlugin({
-            filename: "css/[name].[hash].css",
+            filename: "css/[name].[contenthash].css",
             chunkFilename: "css/[id].[hash].css"
         }),
         new ParallelUglifyPlugin({
