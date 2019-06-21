@@ -146,7 +146,8 @@ module.exports = {
                         presets: ["@babel/preset-env"], //es6-->es5的预设
                         plugins: [
                             ["@babel/plugin-proposal-object-rest-spread"],
-                            ["@babel/plugin-transform-runtime"]
+                            ["@babel/plugin-transform-runtime"],
+                            ["import", { libraryName: "antd-mobile", style: "css" }]
                         ]
                     }
                 }
