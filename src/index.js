@@ -18,10 +18,10 @@ var g = gen();
 console.log("gen.next()========>", g.next());
 
 
-
 const App = () => (
+  
   <main>
-    <HashRouter basename="/login">{renderRoutes(routes)}</HashRouter>
+      <HashRouter history={history}>{renderRoutes(routes)}</HashRouter>
   </main>
 );
 console.log("renderRoutes(routes)========>", renderRoutes(routes));

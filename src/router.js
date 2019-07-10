@@ -3,10 +3,14 @@ import Sortcomponent from "./component/sort/index.jsx";
 
 
 export const routes = [
-  { path: "/", exact: true, component: Indexcomponent },
+  { path: "/",  component: Indexcomponent,exact: true, },
   {
     path: "/login",
-    exact: true,
+
     component: Sortcomponent
+  },
+  {
+    path: "/index",
+    component: Indexcomponent
   }
 ];
